@@ -1,0 +1,124 @@
+AquaTerra
+
+online version: 
+
+https://replit.com/@BREWSBEWS/AquaTerra#main.py
+
+------------------------------------------------------------------------------------
+
+Python version code: 
+
+from colorama import Fore, Style
+import art
+import random
+
+print(Fore.GREEN + art.text2art("AquaTerra") + Style.RESET_ALL)
+
+class Game:
+    def __init__(self):
+        self.hunger = 100
+        self.lives = 3
+        self.wood = 0
+        self.stone = 0
+        self.houses = 0
+        self.food = 0
+        self.tools = 0
+        self.boss_hp = 500
+
+    def build_house(self):
+        if self.wood >= 10:
+            self.houses += 1
+            self.wood -= 10
+            print("🏠 You built a house!")
+        else:
+            print("🚫 You don't have enough wood to build a house.")
+
+    def chop_wood(self):
+        self.wood += 5
+        self.hunger -= 10
+        print("🪓 You chopped some wood.")
+
+    def hunt_boar(self):
+        if random.random() < 0.3:
+            self.food += 1
+            print("🐗 You killed a boar and got some food!")
+        else:
+            print("🐾 The boar escaped!")
+
+    def eat_food(self):
+        if self.food > 0:
+            self.hunger += 20
+            self.food -= 1
+            print("🍽️ You ate some food and you're full!")
+        else:
+            print("🚫 You don't have any food to eat.")
+
+    def mine_stone(self):
+        self.stone += 5
+        self.hunger -= 10
+        print("⛏️ You mined some stone.")
+
+    def crafting(self):
+        if self.wood >= 2 and self.stone >= 2:
+            self.tools += 1
+            self.wood -= 2
+            self.stone -= 2
+            print("🛠️ You crafted a tool!")
+        else:
+            print("🚫 You don't have enough materials to craft a tool.")
+
+    def fight_boss(self):
+        if random.random() < 0.5:
+            self.boss_hp -= 100
+            print(f"👊 You hit Verzide and he has {self.boss_hp} HP left!")
+        else:
+            print("💥 Verzide hit you and you lost a life!")
+            self.lives -= 1
+
+    def game_loop(self):
+        while self.hunger > 0 and self.lives > 0:
+            print(f"🍽️ Hunger: {self.hunger}, ❤️ Lives: {'❤️' * self.lives}, 🪵 Wood: {self.wood}, ⛏️ Stone: {self.stone}, 🏠 Houses: {self.houses}, 🍖 Food: {self.food}, 🛠️ Tools: {self.tools}")
+
+            if random.random() < 0.1 and (self.houses > 0 and self.tools > 0):
+                print("💀 Verzide appeared!")
+                action = input("Action (f - fight / e - end): ").lower()
+                if action == 'f':
+                    self.fight_boss()
+                elif action == 'e':
+                    break
+                else:
+                    print("Invalid action.")
+                continue
+
+            action = input("Action (b - build / w - wood / h - hunt / e - eat / end - end / m - mine stone / c - crafting): ").lower()
+
+            if action == 'b':
+                self.build_house()
+            elif action == 'w':
+                self.chop_wood()
+            elif action == 'h':
+                self.hunt_boar()
+            elif action == 'e':
+                self.eat_food()
+            elif action == 'end':
+                break
+            elif action == 'm':
+                self.mine_stone()
+            elif action == 'c':
+                self.crafting()
+            else:
+                print("Invalid action.")
+
+            self.hunger -= 5
+            if self.hunger <= 0:
+                self.lives -= 1
+                print("💀 You died of hunger!")
+
+        if self.lives <= 0:
+            print("💔 Game over, you lost all your lives.")
+        else:
+            print("🎮 GAME OVER!")
+
+if __name__ == "__main__":
+    game = Game()
+    game.game_loop()
