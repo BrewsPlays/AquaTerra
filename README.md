@@ -8,7 +8,6 @@ Welcome to AquaTerra, a fascinating game that takes you into the world of underw
 
 AquaTerra is simple to understand but offers many possibilities. You can build and modify your environment, collect resources, fight enemies, and much more.
 
-You can play the game online at https://replit.com/@BREWSBEWS/AquaTerra.
 
 ## Contributing
 
